@@ -1,0 +1,31 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+
+# Arquivos de Banco de Dados
+db.sqlite3
+
+# Arquivos de Mídia
+media/
+
+# Arquivos Estáticos
+static/
+
+# Arquivos de Log
+*.log
+
+# Arquivos de Configuração Local
+.env
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
+
