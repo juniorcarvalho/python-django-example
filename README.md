@@ -4,7 +4,7 @@ Um projeto Django básico com um endpoint de status.
 
 ## Requisitos
 
-- Python 3.11+
+- Python 3.13+
 - [uv](https://github.com/astral-sh/uv)
 
 ## Instalação

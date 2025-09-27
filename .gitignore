@@ -29,3 +29,6 @@ static/
 .DS_Store
 Thumbs.db
 
+.idea/
+.vscode/
+pg_database/

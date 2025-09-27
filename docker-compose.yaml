@@ -1,0 +1,15 @@
+version: "3.9"
+
+services:
+  database:
+    container_name: database
+    image: postgres:17.0
+    restart: no
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: database
+      POSTGRES_PASSWORD: database
+      LC_ALL: C.UTF-8
+    volumes:
+      - ./pg_database:/var/lib/postgresql/data
