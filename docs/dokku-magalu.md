@@ -17,7 +17,7 @@ Nesse exemplo vamos utilizar uma máquina virtual na [Magalu Cloud](http://magal
   
 A documentação completa de uso na [Magalu Cloud](http://magalu.cloud) pode ser visualizada aqui: [Documentação Magalu Cloud](https://docs.magalu.cloud/docs/docs/). E aqui um vídeo que mostra como criar uma máquina virtual. [Como criar uma máquina virtual](https://docs.magalu.cloud/docs/computing/virtual-machine/tutorials/create-virtual-machine)  
   
-Nesse exemplo vou utilizar um projeto simples em python, Django e Django-rest-framework. Esse projeto provê apenas um endpoint ‘status’ retornando uma resposta json.  
+Nesse exemplo vou utilizar um projeto simples em python, django e django-rest-framework. Esse projeto provê apenas um endpoint ‘status’ retornando uma resposta json.  
   
 Projeto disponível aqui: [python-django-example](https://github.com/juniorcarvalho/python-Django-example)  
   
@@ -38,8 +38,8 @@ ED25519 key fingerprint is SHA256:tbnvJ/WRO/vbi95X7D+M0mHAZq3pIo1wI39VprSnx5Y.Th
 Conforme a documentação do [Dokku,](https://Dokku.com/) para realizar a instalação:  
   
 ```bash  
-wget -NP . [https://dokku.com/bootstrap.sh](https://dokku.com/bootstrap.sh)  
-sudo DOKKU_TAG=v0.36.7 bash [bootstrap.sh](http://bootstrap.sh/)  
+wget -NP . https://dokku.com/bootstrap.sh  
+sudo DOKKU_TAG=v0.36.7 bash bootstrap.sh  
 ```  
   
 ## 2. Configurando a chave SSH  
@@ -161,7 +161,8 @@ dokku run python-django-example python manage.py migrate
 ## 7. Configurando o domínio  
   
 Precisamos configurar o domínio para conseguir acessar o servidor. No nosso exemplo não temos URL então vamos configurar o acesso pelo IP mesmo.  
-  
+
+Onde 201.23.72.173 é o ip do servidor.  
 ```bash  
 dokku domains:add python-django-example 201.23.72.173
 dokku ps:restart python-django-example 
@@ -174,14 +175,30 @@ dokku domains:add python-django-example django-example.com.br
 dokku config:set python-django-example ALLOWED_HOSTS="django-example.com.br,127.0.0.1, .localhost"
 dokku ps:restart python-django-example 
 ```  
-  
-## 8. Acessando a aplicação  
+
+## 8. dokku-letsencrypt
+dokku-letsencrypt é o plugin oficial do dokku que permite recuperar e instalar automaticamente certificados TLS de letsencrypt.org
+
+Instalando o plugin:  
+```bash
+sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
+```
+Configurando:
+```bash
+# configura o email para registro do certificado
+dokku letsencrypt:set --global email your@email.tld
+# ativa o letsencrypt para a app
+dokku letsencrypt:enable python-django-example
+# renovação automatica do certificado
+dokku letsencrypt:cron-job --add
+```
+## 9. Acessando a aplicação  
   
 **Admin Django**: [http://201.23.72.173/admin](http://201.23.72.173/admin)  
   
 **API**: [http://201.23.72.173/api/status/](http://201.23.72.173/api/status/)  
   
-## 9. Considerações finais  
+## 10. Considerações finais  
   
 Já utilizo o Dokku em projetos pessoais e testes. Sempre funcionou muito bem para pequenas aplicações. Vale a pena estudar mais pois as possibilidades de integrações são grandes.   
   
