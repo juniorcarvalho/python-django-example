@@ -114,8 +114,8 @@ Após esse comando vai ser criado automaticamente a variável DATABASE_URL em no
 Temos que configurar algumas variáveis de ambiente em nosso app. Como estamos usando Django, vamos criar  `SECRET_KEY` e `DEBUG`. Acesse a documentação [environment-variables](https://Dokku.com/docs/configuration/environment-variables/) para mais informações.  
   
 ```bash  
-dokku config:set python-django-example `DEBUG`='False'  
-dokku config:set python-django-example `SECRET_KEY`='sua secret_key'  
+dokku config:set python-django-example DEBUG='False'  
+dokku config:set python-django-example SECRET_KEY='sua secret_key'  
 dokku config:set python-django-example ALLOWED_HOSTS='127.0.0.1, .localhost,201.23.72.173'
 ```  
   
@@ -138,7 +138,7 @@ git remote add dokku dokku@201.23.72.173:python-django-example
 Executando o deploy:  
   
 ```bash  
-git push Dokku main  
+git push dokku main  
 ```  
   
 ## 6. Criando as tabelas do banco de dados  
@@ -147,7 +147,13 @@ Nossa app está no ar mais ainda não tem as tabelas de nossa base de dados. Na 
   
 ```bash  
 dokku run python-django-example python manage.py migrate
-```  
+``` 
+
+Para criar um super usuário admin do Django:  
+  
+```bash  
+dokku run python-django-example python manage.py createsuperuser
+```
   
 ## 7. Configurando o domínio  
   
@@ -167,29 +173,13 @@ dokku config:set python-django-example ALLOWED_HOSTS="django-example.com.br,127.
 dokku ps:restart python-django-example 
 ```  
 
-## 8. dokku-letsencrypt
-dokku-letsencrypt é o plugin oficial do dokku que permite recuperar e instalar automaticamente certificados TLS de letsencrypt.org
-
-Instalando o plugin:  
-```bash
-sudo dokku plugin:install https://github.com/dokku/dokku-letsencrypt.git
-```
-Configurando:
-```bash
-# configura o email para registro do certificado
-dokku letsencrypt:set --global email your@email.tld
-# ativa o letsencrypt para a app
-dokku letsencrypt:enable python-django-example
-# renovação automatica do certificado
-dokku letsencrypt:cron-job --add
-```
-## 9. Acessando a aplicação  
+## 8. Acessando a aplicação  
   
 **Admin Django**: [http://201.23.72.173/admin](http://201.23.72.173/admin)  
   
 **API**: [http://201.23.72.173/api/status/](http://201.23.72.173/api/status/)  
   
-## 10. Considerações finais  
+## 9. Considerações finais  
   
 Já utilizo o Dokku em projetos pessoais e testes. Sempre funcionou muito bem para pequenas aplicações. Vale a pena estudar mais pois as possibilidades de integrações são grandes.   
   
