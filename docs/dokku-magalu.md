@@ -64,20 +64,11 @@ cat ~/.ssh/id_rsa.pub
 ```  
   
 Com o conteúdo do arquivo copiado, vamos executar o comando na maquina remota:  
-  
-Esse comando deve ser executado como root, então antes execute:  
-  
+ 
 ```bash  
-sudo su
-```    
-e depois:  
-  
-```bash  
-echo 'CONTENTS_OF_ID_RSA_PUB_FILE' | Dokku ssh-keys:add admin
+echo 'CONTENTS_OF_ID_RSA_PUB_FILE' | sudo dokku ssh-keys:add admin
 ```    
 CONTENTS_OF_ID_RSA_PUB_FILE = a chave copiada da maquina de desenvolvimento.
-
-para sair do root: `exit`  
   
 Confirme se a chave foi criada com o comando:  
   
